@@ -1,0 +1,16 @@
+# --- GÉNÉRAL ---
+Thumbs.db
+.env.*
+
+# --- .NET CORE ---
+# Dossiers de compilation
+**/bin/
+**/obj/
+# Bloque les fichiers de configuration de dev spécifiques à .NET
+**/appsettings.Development.json
+**/UserSecrets/
+
+# Fichiers de préférences utilisateur de Visual Studio / Rider
+*.user
+*.suo
+*.sln.docstates
