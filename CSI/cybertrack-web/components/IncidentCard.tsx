@@ -45,12 +45,15 @@ export default function IncidentCard({ incident, onDelete }: Props) {
         </div>
 
         {/* Bouton Supprimer */}
-        <button
-          onClick={() => onDelete(incident.id)}
-          className="w-full px-4 bg-red-900/10 hover:bg-red-900/30 text-red-500 py-2 rounded text-sm font-semibold border border-red-500/10 transition-colors"
-        >
-          Supprimer
-        </button>
+        {/* Dans IncidentCard.tsx */}
+{onDelete && (
+  <button 
+    onClick={() => onDelete(incident.id)}
+    className="text-red-500 hover:text-red-400 text-xs font-bold"
+  >
+    Supprimer
+  </button>
+)}
       </div>
     </div>
   );

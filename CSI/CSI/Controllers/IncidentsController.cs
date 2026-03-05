@@ -168,24 +168,32 @@ namespace CSI.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateIncident(int id, Incident incident)
         {
-            if (id != incident.Id)
-            {
-                return BadRequest();
-            }
+            if (id != incident.Id) return BadRequest("ID non concordant");
 
-            _context.Entry(incident).State = EntityState.Modified;
+            // 1. On cherche l'incident existant en base
+            var existingIncident = await _context.Incident.FindAsync(id);
+            if (existingIncident == null) return NotFound();
+
+            // 2. On met à jour manuellement les propriétés autorisées
+            existingIncident.Type = incident.Type;
+            existingIncident.Severite = incident.Severite;
+            existingIncident.Etat = incident.Etat;
+            existingIncident.Description = incident.Description;
+            existingIncident.DateResolution = incident.DateResolution;
+            existingIncident.AnalysteId = incident.AnalysteId;
+
+            // Sauvegarde cruciale de l'état du Playbook
+            existingIncident.PlaybookStatus = incident.PlaybookStatus;
 
             try
             {
+                // 3. EF détecte les changements et ne génère le SQL que pour ces colonnes
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!IncidentExists(id))
-                {
-                    return NotFound();
-                }
-                else { throw; }
+                if (!IncidentExists(id)) return NotFound();
+                else throw;
             }
 
             return NoContent();

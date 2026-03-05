@@ -147,10 +147,27 @@
 // }
 "use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    } else {
+      setLoading(false);
+    }
+  }, [router]);
+
+  if (loading) return <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">Chargement...</div>;
+
   return (
     <main className="min-h-[90vh] flex flex-col items-center justify-center text-center p-6">
+      {/* Ton contenu existant */}
       <div className="max-w-3xl">
         <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
           Protégez vos actifs <span className="text-blue-500">en temps réel</span>
@@ -162,12 +179,7 @@ export default function Home() {
         <div className="flex gap-4 justify-center">
           <Link href="/incidents">
             <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/40 transition-all">
-              Accéder au Dashboard
-            </button>
-          </Link>
-          <Link href="/nouveau">
-            <button className="bg-slate-800 hover:bg-slate-700 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all">
-              Signaler une menace
+              Gestion des Incidents
             </button>
           </Link>
         </div>

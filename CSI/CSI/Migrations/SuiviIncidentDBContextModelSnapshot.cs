@@ -89,6 +89,9 @@ namespace CSI.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PlaybookStatus")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Severite")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

@@ -2,6 +2,14 @@
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
+const getAuthHeaders = () => {
+    const token = localStorage.getItem("token");
+    return {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+    };
+};
+
 export const incidentService = {
     getAll: async (): Promise<Incident[]> => {
         const res = await fetch(`${API_BASE_URL}/incidents`);
@@ -10,19 +18,19 @@ export const incidentService = {
     create: async (data: Partial<Incident>) => {
         return fetch(`${API_BASE_URL}/incidents`, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(data)
         });
     },
     update: async (id: number, data: Partial<Incident>) => {
         return fetch(`${API_BASE_URL}/incidents/${id}`, {
             method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
+            headers: getAuthHeaders(),
             body: JSON.stringify(data)
         });
     },
     delete: async (id: number) => {
-        return fetch(`${API_BASE_URL}/incidents/${id}`, { method: 'DELETE' });
+        return fetch(`${API_BASE_URL}/incidents/${id}`, { method: 'DELETE', headers: getAuthHeaders() });
     },
 
     // Dans incidentService.ts

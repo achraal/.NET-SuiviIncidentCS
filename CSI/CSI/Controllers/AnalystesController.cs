@@ -19,6 +19,7 @@ namespace CSI.Controllers
         public string Password { get; set; } // <--- C'est la clé ! Mot de passe en clair
         public string Role { get; set; }
         public string Phone { get; set; }
+        public bool Disponibilite { get; set; }
     }
     [Route("api/[controller]")] // Route : api/analystes
     [ApiController] // Active les comportements spécifiques à l'API (ex: validation auto du modèle)
@@ -28,9 +29,10 @@ namespace CSI.Controllers
         private readonly SuiviIncidentDBContext _context;
         private readonly IPasswordService _passwordService;
 
-        public AnalystesController(SuiviIncidentDBContext context)
+        public AnalystesController(SuiviIncidentDBContext context, IPasswordService passwordService)
         {
             _context = context;
+            _passwordService = passwordService;
         }
 
         // GET: Analystes
@@ -116,7 +118,7 @@ namespace CSI.Controllers
                 Email = dto.Email,
                 Phone = dto.Phone,
                 Role = dto.Role, // L'admin choisit le rôle ici
-                Disponibilite = true,
+                Disponibilite = dto.Disponibilite,
                 // HACHAGE ICI : On transforme le mot de passe clair en hash Argon2
                 PasswordHash = _passwordService.HashPassword(dto.Password)
             };
@@ -193,14 +195,26 @@ namespace CSI.Controllers
 
         // PUT: api/Analystes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAnalyste(int id, Analyste analyste)
+        public async Task<IActionResult> UpdateAnalyste(int id, [FromBody] AnalysteCreationDto dto)
         {
-            if (id != analyste.Id)
-            {
-                return BadRequest();
-            }
+            var analyste = await _context.Analyste.FindAsync(id);
+            if (analyste == null) return NotFound();
 
-            _context.Entry(analyste).State = EntityState.Modified;
+            // Mise à jour des champs classiques
+            analyste.Nom = dto.Nom;
+            analyste.Prenom = dto.Prenom;
+            analyste.Email = dto.Email;
+            analyste.Phone = dto.Phone;
+            analyste.Role = dto.Role;
+            analyste.Disponibilite = dto.Disponibilite;
+
+            // LOGIQUE DU MOT DE PASSE :
+            // On ne re-hache le mot de passe que si l'admin en a saisi un nouveau
+            if (!string.IsNullOrWhiteSpace(dto.Password))
+            {
+                analyste.PasswordHash = _passwordService.HashPassword(dto.Password);
+            }
+            // Si dto.Password est vide, on ne touche pas à analyste.PasswordHash
 
             try
             {
@@ -208,15 +222,37 @@ namespace CSI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AnalysteExists(id))
-                {
-                    return NotFound();
-                }
-                else { throw; }
+                return BadRequest("Erreur lors de la mise à jour en base de données.");
             }
 
-            return NoContent(); // Succès, mais pas de contenu à renvoyer
+            return NoContent(); // Succès 204
         }
+
+        //[HttpPut("{id}")]
+        //public async Task<IActionResult> UpdateAnalyste(int id, Analyste analyste)
+        //{
+        //    if (id != analyste.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    _context.Entry(analyste).State = EntityState.Modified;
+
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //    }
+        //    catch (DbUpdateConcurrencyException)
+        //    {
+        //        if (!AnalysteExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else { throw; }
+        //    }
+
+        //    return NoContent(); // Succès, mais pas de contenu à renvoyer
+        //}
 
         // GET: Analystes/Delete/5
         //public async Task<IActionResult> Delete(int? id)

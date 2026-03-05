@@ -29,5 +29,6 @@ namespace CSI.Models
 
         [ForeignKey("AnalysteId")]
         public virtual Analyste? AnalysteEnCharge { get; set; }
+        public string? PlaybookStatus { get; set; } // Stockera "1,0,1" ou un JSON
     }
 }

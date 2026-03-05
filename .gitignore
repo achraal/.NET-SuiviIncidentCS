@@ -1,6 +1,7 @@
 # --- GÉNÉRAL ---
 Thumbs.db
 .env.*
+.env.local
 
 # --- .NET CORE ---
 # Dossiers de compilation

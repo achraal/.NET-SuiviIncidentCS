@@ -18,10 +18,10 @@ namespace CSI.Controllers
     public class AuthController : ControllerBase
     {
         private readonly SuiviIncidentDBContext _context;
-        private readonly PasswordService _passwordService;
+        private readonly IPasswordService _passwordService;
         private readonly IConfiguration _config;
 
-        public AuthController(SuiviIncidentDBContext context, PasswordService passwordService, IConfiguration config)
+        public AuthController(SuiviIncidentDBContext context, IPasswordService passwordService, IConfiguration config)
         {
             _context = context;
             _passwordService = passwordService;
@@ -52,7 +52,8 @@ namespace CSI.Controllers
                     analyste.Nom,
                     analyste.Prenom,
                     analyste.Role,
-                    analyste.Phone,          // Ajouté
+                    analyste.Email,
+                    analyste.Phone,          
                     analyste.Disponibilite
                 }
             });
@@ -60,8 +61,13 @@ namespace CSI.Controllers
 
         private string GenerateJwtToken(Analyste analyste)
         {
+            // Récupération depuis les variables d'environnement
+            var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+            var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+            var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
             // Récupération de la clé secrète depuis appsettings.json
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            //var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             // On définit le contenu du badge (Claims)
@@ -69,14 +75,14 @@ namespace CSI.Controllers
             {
             new Claim(JwtRegisteredClaimNames.Sub, analyste.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, analyste.Email),
-            new Claim(ClaimTypes.Role, analyste.Role), // TRÈS IMPORTANT pour Next.js
+            new Claim(ClaimTypes.Role, analyste.Role),
             new Claim("Prenom", analyste.Prenom)
         };
 
             // Création de l'objet Token
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: jwtIssuer,
+                audience: jwtAudience,
                 claims: claims,
                 expires: DateTime.Now.AddHours(8), // Durée de validité
                 signingCredentials: credentials);

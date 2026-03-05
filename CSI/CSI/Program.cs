@@ -4,13 +4,19 @@ using DotNetEnv;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+//using Microsoft.OpenApi;
 using System.Text;
 using System.Text.Json.Serialization;
+
+DotNetEnv.Env.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
 // On récupère la clé depuis appsettings.json
-var jwtKey = builder.Configuration["Jwt:Key"];
+//var jwtKey = builder.Configuration["JWT_KEY"];
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
 var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
 
 builder.Services.AddAuthentication(options =>
@@ -26,15 +32,15 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
+        //ValidIssuer = builder.Configuration["JWT_ISSUER"],
+        ValidIssuer = jwtIssuer,
+        //ValidAudience = builder.Configuration["JWT_AUDIENCE"],
+        ValidAudience = jwtAudience,
         IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
     };
 });
 
 builder.Services.AddAuthorization();
-
-DotNetEnv.Env.Load();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options => {
@@ -51,12 +57,44 @@ builder.Services.AddDbContext<SuiviIncidentDBContext>(options => options.UseSqlS
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+// Supprime l'alias en haut et remplace le bloc AddSwaggerGen par celui-ci :
+/*builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new global::Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "CSI API",
+        Version = "v1"
+    });
 
+    // On définit la sécurité
+    var securityScheme = new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "Entrez 'Bearer' suivi d'un espace et de votre jeton.",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        Reference = new Microsoft.OpenApi.Models.OpenApiReference
+        {
+            Id = "Bearer",
+            Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme
+        }
+    };
+
+    options.AddSecurityDefinition("Bearer", securityScheme);
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        { securityScheme, new string[] { } }
+    });
+});*/
+var frontendUrl = Environment.GetEnvironmentVariable("NEXT_JS");
 // Configuration du CORS pour Next.js (Port 3000)
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowNextJS",
-        policy => policy.WithOrigins("http://localhost:3000")
+        policy => policy.WithOrigins(frontendUrl)
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
@@ -110,7 +148,9 @@ using (var scope = app.Services.CreateScope())
 
     // 1. On s'assure que la base est créée
     context.Database.EnsureCreated();
-
+    var adminEmail = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_EMAIL");
+    var adminPass = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PASSWORD");
+    var adminPhone = Environment.GetEnvironmentVariable("DEFAULT_ADMIN_PHONE");
     // 2. On vérifie si un Admin existe déjà
     if (!context.Analyste.Any(a => a.Role == "Admin"))
     {
@@ -119,12 +159,12 @@ using (var scope = app.Services.CreateScope())
         {
             Nom = "Admin",
             Prenom = "Système",
-            Email = "admin@cybertrack.com",
-            Phone = "00000000",
+            Email = adminEmail,
+            Phone = adminPhone,
             Role = "Admin", // C'est cette valeur qui lui donne les pleins pouvoirs
             Disponibilite = true,
             // On hache le mot de passe initial
-            PasswordHash = passwordService.HashPassword("Admin@Cyber2026!")
+            PasswordHash = passwordService.HashPassword(adminPass)
         };
 
         context.Analyste.Add(admin);
