@@ -34,19 +34,21 @@
 //     </html>
 //   );
 // }
+// app/layout.tsx
 import type { Metadata } from "next";
-// 1. Import de Roboto au lieu de Geist
+// 1. Importation des polices
 import { Roboto, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/Navbar";
 
 // 2. Configuration de Roboto
 const roboto = Roboto({
-  weight: ["400", "500", "700"], // On prend les poids standard, medium et gras
-  variable: "--font-roboto",    // On définit la variable CSS
+  weight: ["400", "500", "700"],
+  variable: "--font-roboto",
   subsets: ["latin"],
 });
 
+// 3. Configuration de Geist Mono
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
@@ -63,36 +65,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // 3. Ajout de la classe "dark" pour que tes styles OKLCH fonctionnent bien
     <html lang="fr" className="dark">
       <body
-        // 4. On remplace geistSans par roboto
+        // Utilisation des variables définies plus haut
         className={`${roboto.variable} ${geistMono.variable} font-sans antialiased bg-[#0f172a] text-white`}
       >
         <Navbar />
-        {/* Ajout d'un conteneur principal pour éviter que le contenu ne soit collé à la nav */}
-        {/*<main className="min-h-screen">
+        {/* On laisse le contenu de page.tsx gérer sa propre mise en page (ex: les colonnes) */}
+        <main className="w-full">
           {children}
-        </main>*/}
-
-        <main className="flex min-h-[calc(100vh-80px)] w-full relative">
-          
-          {/* COLONNE GAUCHE : L'Image Fixe (Look Cyber) */}
-          <div className="hidden lg:block w-[35%] h-[calc(100vh-80px)] sticky top-20 overflow-hidden border-r border-slate-800/50">
-            <img 
-              src="/images/photo-1731530357802-08d982917720.png"
-              alt="CyberTrack Security Overview"
-              className="w-full h-full object-cover object-center opacity-70 mix-blend-luminosity hover:opacity-100 transition-opacity duration-500"
-            />
-            {/* Optionnel : Un léger dégradé sombre par-dessus pour la profondeur */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#0f172a]/80"></div>
-          </div>
-
-          {/* COLONNE DROITE : Ton contenu (page.tsx, incidents.tsx, etc.) */}
-          <div className="flex-1 w-full lg:max-w-[55%] ml-auto">
-            {children}
-          </div>
-
         </main>
       </body>
     </html>

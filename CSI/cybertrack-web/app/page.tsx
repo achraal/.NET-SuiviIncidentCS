@@ -163,27 +163,74 @@ export default function Home() {
     }
   }, [router]);
 
-  if (loading) return <div className="min-h-screen bg-gray-900 flex items-center justify-center text-white">Chargement...</div>;
-
-  return (
-    <main className="min-h-[90vh] flex flex-col items-center justify-center text-center p-6">
-      {/* Ton contenu existant */}
-      <div className="max-w-3xl">
-        <h1 className="text-5xl md:text-7xl font-extrabold text-white mb-6">
-          Protégez vos actifs <span className="text-blue-500">en temps réel</span>
-        </h1>
-        <p className="text-slate-400 text-lg mb-10 leading-relaxed">
-          Bienvenue sur CyberTrack. Notre plateforme centralisée permet de détecter, 
-          analyser et résoudre les menaces cyber avant qu'elles n'atteignent vos données critiques.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Link href="/incidents">
-            <button className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/40 transition-all">
-              Gestion des Incidents
-            </button>
-          </Link>
+  if (loading) {
+    return (
+      <div className="min-h-[calc(100vh-80px)] bg-[#0f172a] flex items-center justify-center text-white">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-lg font-medium animate-pulse">Chargement de CyberTrack...</p>
         </div>
       </div>
-    </main>
+    );
+  }
+
+  return (
+    <div className="flex min-h-[calc(100vh-80px)] w-full relative bg-[#0f172a] overflow-x-hidden">
+      
+      {/* COLONNE GAUCHE : Image agrandie et décalée du bord gauche */}
+      <div className="hidden lg:flex lg:w-[40%] h-[calc(100vh-80px)] sticky top-20 items-center justify-center bg-[#0f172a] pl-16">
+        {/* On a enlevé la restriction h-[70%] pour que l'image soit plus grande */}
+        <div className="relative w-full h-full flex items-center justify-center p-4">
+          <img 
+            src="/images/AdobeExpress.png"
+            alt="CyberTrack Security Overview"
+            className="max-w-full max-h-[90%] object-contain drop-shadow-[0_0_40px_rgba(59,130,246,0.15)] transition-transform duration-700 hover:scale-105"
+          />
+        </div>
+      </div>
+
+      {/* COLONNE DROITE : Contenu décalé de la droite et rapproché du centre */}
+      <main className="flex-1 lg:-ml-px relative z-10 flex flex-col items-center justify-center p-8 bg-[#0f172a]">
+        
+        {/* mr-20 : décale tout le bloc du bord droit de l'écran 
+            lg:ml-[-2rem] : rapproche un peu le texte vers l'image */}
+        <div className="max-w-xl text-center lg:mr-24">
+          
+          <div className="inline-block px-3 py-1 mb-8 text-xs font-semibold tracking-widest text-blue-400 uppercase bg-blue-500/10 border border-blue-500/20 rounded-full">
+            Plateforme de Cybersécurité
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+            Protégez vos actifs <br />
+            <span className="text-blue-500">en temps réel</span>
+          </h1>
+          
+          <p className="text-slate-400 text-base md:text-lg mb-10 leading-relaxed">
+            Bienvenue sur <span className="text-white font-semibold">CyberTrack</span>. 
+            Détectez et résolvez les menaces cyber avant qu'elles n'atteignent vos données critiques.
+          </p>
+          
+          <div className="flex justify-center mb-16">
+            <Link href="/incidents">
+              <button className="bg-blue-600 hover:bg-blue-500 text-white px-10 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-900/20 transition-all active:scale-95">
+                Gestion des Incidents
+              </button>
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 gap-12 border-t border-slate-800/60 pt-10">
+            <div className="flex flex-col items-center">
+              <p className="text-3xl font-bold text-white">99.9%</p>
+              <p className="text-slate-500 text-[10px] uppercase tracking-[0.2em] mt-2">Disponibilité</p>
+            </div>
+            <div className="flex flex-col items-center">
+              <p className="text-3xl font-bold text-blue-500">&lt; 1s</p>
+              <p className="text-slate-500 text-[10px] uppercase tracking-[0.2em] mt-2">Temps de Réponse</p>
+            </div>
+          </div>
+          
+        </div>
+      </main>
+    </div>
   );
 }

@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\controllers\\ingestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\controllers\\ingestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\.env||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\controllers\\ingestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\controllers\\ingestioncontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|solutionrelative:csi\\.env||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{84557D2C-43DD-1827-D303-7EB83AE8F861}|CSI\\CSI.csproj|c:\\users\\achra\\desktop\\.net-suiviincidentcs\\csi\\csi\\csi.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
@@ -30,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": ".env",
               "DocumentMoniker": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\.env",
               "RelativeDocumentMoniker": "CSI\\.env",
@@ -43,8 +43,7 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2026-02-23T21:55:11.951Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
@@ -56,31 +55,29 @@
               "RelativeToolTip": "CSI\\Controllers\\AuthController.cs",
               "ViewState": "AgIAAEkAAAAAAAAAAAAIwF0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T22:24:26.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-05T22:24:26.794Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Program.cs",
+              "RelativeDocumentMoniker": "CSI\\Program.cs",
+              "ToolTip": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Program.cs",
+              "RelativeToolTip": "CSI\\Program.cs",
+              "ViewState": "AgIAAJgAAAAAAAAAAAAswJ8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-13T20:38:14.881Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Program.cs",
-              "RelativeDocumentMoniker": "CSI\\Program.cs",
-              "ToolTip": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Program.cs*",
-              "RelativeToolTip": "CSI\\Program.cs*",
-              "ViewState": "AgIAAJgAAAAAAAAAAAAswJ8AAAAaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-13T20:38:14.881Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "IngestionController.cs",
               "DocumentMoniker": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Controllers\\IngestionController.cs",
               "RelativeDocumentMoniker": "CSI\\Controllers\\IngestionController.cs",
               "ToolTip": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\Controllers\\IngestionController.cs",
               "RelativeToolTip": "CSI\\Controllers\\IngestionController.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAADwvxwAAAAtAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAADwvxwAAABLAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-03-03T23:27:20.065Z",
               "EditorCaption": ""
@@ -94,8 +91,7 @@
               "ToolTip": "C:\\Users\\achra\\Desktop\\.NET-SuiviIncidentCS\\CSI\\CSI\\CSI.csproj",
               "RelativeToolTip": "CSI\\CSI.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-02-20T22:47:05.33Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-20T22:47:05.33Z"
             }
           ]
         }

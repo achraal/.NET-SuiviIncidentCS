@@ -15,6 +15,13 @@ export const incidentService = {
         const res = await fetch(`${API_BASE_URL}/incidents`);
         return res.json();
     },
+    getById: async (id: number): Promise<Incident> => {
+        const res = await fetch(`${API_BASE_URL}/incidents/${id}`, {
+            headers: getAuthHeaders() // Optionnel selon si ta route est protégée
+        });
+        if (!res.ok) throw new Error("Impossible de récupérer l'incident");
+        return res.json();
+    },
     create: async (data: Partial<Incident>) => {
         return fetch(`${API_BASE_URL}/incidents`, {
             method: 'POST',
